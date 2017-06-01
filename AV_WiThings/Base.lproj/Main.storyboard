@@ -48,15 +48,15 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ykL-CO-W2s">
-                                            <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                            <rect key="frame" x="3" y="3" width="64" height="64"/>
                                         </imageView>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="ykL-CO-W2s" secondAttribute="trailing" id="Q0n-Ld-tXZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="ykL-CO-W2s" secondAttribute="bottom" id="edG-de-mx2"/>
-                                    <constraint firstItem="ykL-CO-W2s" firstAttribute="leading" secondItem="3Lx-sc-taU" secondAttribute="leading" id="iED-eD-BiX"/>
-                                    <constraint firstItem="ykL-CO-W2s" firstAttribute="top" secondItem="3Lx-sc-taU" secondAttribute="top" id="jMI-4g-im6"/>
+                                    <constraint firstAttribute="trailing" secondItem="ykL-CO-W2s" secondAttribute="trailing" constant="3" id="Q0n-Ld-tXZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="ykL-CO-W2s" secondAttribute="bottom" constant="3" id="edG-de-mx2"/>
+                                    <constraint firstItem="ykL-CO-W2s" firstAttribute="leading" secondItem="3Lx-sc-taU" secondAttribute="leading" constant="3" id="iED-eD-BiX"/>
+                                    <constraint firstItem="ykL-CO-W2s" firstAttribute="top" secondItem="3Lx-sc-taU" secondAttribute="top" constant="3" id="jMI-4g-im6"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imgPix" destination="ykL-CO-W2s" id="hox-lF-m69"/>
@@ -69,10 +69,45 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="hfC-rq-PVO"/>
+                    <connections>
+                        <segue destination="eXq-zJ-IwC" kind="show" identifier="SegueToPlay" id="x53-zc-QEi"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NYu-sB-zfl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="198" y="119"/>
+        </scene>
+        <!--Animate Pix Img View Controller-->
+        <scene sceneID="0A0-MZ-GHM">
+            <objects>
+                <viewController id="eXq-zJ-IwC" customClass="AnimatePixImgViewController" customModule="AV_WiThings" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vXj-jx-vbA"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ybp-bv-CSJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WmB-Jb-1P5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qs0-H0-UwS">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qs0-H0-UwS" firstAttribute="leading" secondItem="WmB-Jb-1P5" secondAttribute="leading" id="7Q4-I1-ufr"/>
+                            <constraint firstAttribute="trailing" secondItem="qs0-H0-UwS" secondAttribute="trailing" id="pLK-Ef-AGQ"/>
+                            <constraint firstItem="Ybp-bv-CSJ" firstAttribute="top" secondItem="qs0-H0-UwS" secondAttribute="bottom" id="pYt-Ba-mSm"/>
+                            <constraint firstItem="qs0-H0-UwS" firstAttribute="top" secondItem="vXj-jx-vbA" secondAttribute="bottom" id="vrw-jn-MDW"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imgPix" destination="qs0-H0-UwS" id="hr4-Qg-RSv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="laa-1h-DWp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="948" y="119"/>
         </scene>
     </scenes>
 </document>
