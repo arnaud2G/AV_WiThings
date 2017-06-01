@@ -26,8 +26,7 @@ class AnimatePixImgViewController:UIViewController {
                 self.imgPix.image = UIImage(data: data)
             })
             }.resume()
-        
-        imgPix.animationImages = pixImgs.map({
+        let animationImages = pixImgs.map({
             (pixImg:PixImage) -> UIImage in
             if let webImg = pixImg.webformatImg {
                 return webImg
@@ -35,7 +34,8 @@ class AnimatePixImgViewController:UIViewController {
                 return pixImg.previewImg!
             }
         })
-        imgPix.animationDuration = 4.0
+        imgPix.animationImages = animationImages
+        imgPix.animationDuration = TimeInterval(animationImages.count*3)
         imgPix.startAnimating()
     }
 }

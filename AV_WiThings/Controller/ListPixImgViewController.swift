@@ -56,22 +56,30 @@ class ListPixImgViewController: UICollectionViewController, APIManagerDelegate {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PixCell", for: indexPath) as! PixCell
         switch pixImgs[indexPath.row].state {
-        case .failed: break
-            // TODO: Gestion de l'erreur de telechargement
+        case .failed:
+            cell.indPix.stopAnimating()
+            cell.imgPix.image = #imageLiteral(resourceName: "not-found")
         case .downloaded:
+            cell.indPix.stopAnimating()
             cell.imgPix.image = pixImgs[indexPath.row].previewImg
         case .none:
+            cell.indPix.startAnimating()
             startDownloadSmallImage(indexPath: indexPath)
         }
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        // On ne peut pas selectionner une image qui na pas de preview
         if pixImgs[indexPath.row].previewImg == nil {
             collectionView.deselectItem(at: indexPath, animated: false)
+            let cell = collectionView.cellForItem(at: indexPath) as! PixCell
+            cell.indPix.startAnimating()
+            cell.imgPix.image = nil
+            startDownloadSmallImage(indexPath: indexPath)
             return
         }
+        // Si besoin on telecharge l'image web
         if pixImgs[indexPath.row].webformatImg == nil {
             startDownloadImage(indexPath: indexPath)
         }
@@ -129,6 +137,7 @@ class ListPixImgViewController: UICollectionViewController, APIManagerDelegate {
 class PixCell:UICollectionViewCell {
     
     @IBOutlet weak var imgPix: UIImageView!
+    @IBOutlet weak var indPix: UIActivityIndicatorView!
     
     func setSmallImage(withStringUrl url:String) {
         

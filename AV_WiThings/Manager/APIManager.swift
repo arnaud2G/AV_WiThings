@@ -32,72 +32,8 @@ struct APIManager {
                     self.delegate?.returnPixImg(ret: jsonImg.map{PixImage(json:$0)}.filter{$0 != nil} as! [PixImage])
                 })
             }
-            
-            /*if let ret = ret as? HTTPURLResponse, let error = action.error(statuCode: ret.statusCode) {
-                self.delegate?.retError(error: error)
-            } else if let data = data {
-                self.prepareRet(action:action, data: data)
-            } else if let error = error {
-                self.delegate?.retFatalError(error: error)
-            }*/
         }).resume()
     }
 }
-
-class PendingOperations {
-    lazy var smallDownloadsInProgress = [IndexPath:Operation]()
-    lazy var downloadsInProgress = [IndexPath:Operation]()
-    lazy var downloadQueue:OperationQueue = {
-        var queue = OperationQueue()
-        queue.name = "Download queue"
-        queue.maxConcurrentOperationCount = 1
-        return queue
-    }()
-}
-
-class SmallImageDownloader: Operation {
-    
-    let pixImage: PixImage
-    init(pixImage: PixImage) {
-        self.pixImage = pixImage
-    }
-    
-    override func main() {
-        
-        if self.isCancelled {
-            return
-        }
-        do {
-            let imageData = try Data(contentsOf: URL(string:self.pixImage.previewURL)!)
-            self.pixImage.previewImg = UIImage(data:imageData)
-            self.pixImage.state = .downloaded
-        } catch {
-            self.pixImage.state = .failed
-        }
-    }
-}
-
-class ImageDownloader: Operation {
-    
-    let pixImage: PixImage
-    init(pixImage: PixImage) {
-        self.pixImage = pixImage
-    }
-    
-    override func main() {
-        
-        if self.isCancelled {
-            return
-        }
-        do {
-            let imageData = try Data(contentsOf: URL(string:self.pixImage.webformatURL)!)
-            self.pixImage.webformatImg = UIImage(data:imageData)
-            self.pixImage.state = .downloaded
-        } catch {
-            self.pixImage.state = .failed
-        }
-    }
-}
-
 
 

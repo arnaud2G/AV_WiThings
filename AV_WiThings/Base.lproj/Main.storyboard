@@ -50,16 +50,22 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ykL-CO-W2s">
                                             <rect key="frame" x="3" y="3" width="64" height="64"/>
                                         </imageView>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hmE-9X-Kno">
+                                            <rect key="frame" x="25" y="25" width="20" height="20"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                 </view>
                                 <constraints>
+                                    <constraint firstItem="hmE-9X-Kno" firstAttribute="centerX" secondItem="3Lx-sc-taU" secondAttribute="centerX" id="G0r-R3-06X"/>
                                     <constraint firstAttribute="trailing" secondItem="ykL-CO-W2s" secondAttribute="trailing" constant="3" id="Q0n-Ld-tXZ"/>
+                                    <constraint firstItem="hmE-9X-Kno" firstAttribute="centerY" secondItem="3Lx-sc-taU" secondAttribute="centerY" id="c3W-dY-PgE"/>
                                     <constraint firstAttribute="bottom" secondItem="ykL-CO-W2s" secondAttribute="bottom" constant="3" id="edG-de-mx2"/>
                                     <constraint firstItem="ykL-CO-W2s" firstAttribute="leading" secondItem="3Lx-sc-taU" secondAttribute="leading" constant="3" id="iED-eD-BiX"/>
                                     <constraint firstItem="ykL-CO-W2s" firstAttribute="top" secondItem="3Lx-sc-taU" secondAttribute="top" constant="3" id="jMI-4g-im6"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imgPix" destination="ykL-CO-W2s" id="hox-lF-m69"/>
+                                    <outlet property="indPix" destination="hmE-9X-Kno" id="wez-Bu-6Lr"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
