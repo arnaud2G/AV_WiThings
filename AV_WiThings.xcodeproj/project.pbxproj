@@ -13,6 +13,8 @@
 		A5ADF5E01EE006FE00C4BC94 /* AV_WiThings.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5ADF5DE1EE006FE00C4BC94 /* AV_WiThings.xcdatamodeld */; };
 		A5ADF5E21EE006FE00C4BC94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5ADF5E11EE006FE00C4BC94 /* Assets.xcassets */; };
 		A5ADF5E51EE006FE00C4BC94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5ADF5E31EE006FE00C4BC94 /* LaunchScreen.storyboard */; };
+		A5ADF5EE1EE0077500C4BC94 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ADF5ED1EE0077500C4BC94 /* APIManager.swift */; };
+		A5ADF5F11EE00B0300C4BC94 /* PixImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ADF5F01EE00B0300C4BC94 /* PixImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		A5ADF5E11EE006FE00C4BC94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A5ADF5E41EE006FE00C4BC94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A5ADF5E61EE006FE00C4BC94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5ADF5ED1EE0077500C4BC94 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIManager.swift; path = Manager/APIManager.swift; sourceTree = "<group>"; };
+		A5ADF5F01EE00B0300C4BC94 /* PixImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PixImage.swift; path = Model/PixImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,8 @@
 		A5ADF5D61EE006FE00C4BC94 /* AV_WiThings */ = {
 			isa = PBXGroup;
 			children = (
+				A5ADF5EF1EE00AEB00C4BC94 /* Model */,
+				A5ADF5EC1EE0075700C4BC94 /* Manager */,
 				A5ADF5D71EE006FE00C4BC94 /* AppDelegate.swift */,
 				A5ADF5D91EE006FE00C4BC94 /* ViewController.swift */,
 				A5ADF5DB1EE006FE00C4BC94 /* Main.storyboard */,
@@ -65,6 +71,22 @@
 				A5ADF5DE1EE006FE00C4BC94 /* AV_WiThings.xcdatamodeld */,
 			);
 			path = AV_WiThings;
+			sourceTree = "<group>";
+		};
+		A5ADF5EC1EE0075700C4BC94 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				A5ADF5ED1EE0077500C4BC94 /* APIManager.swift */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		A5ADF5EF1EE00AEB00C4BC94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A5ADF5F01EE00B0300C4BC94 /* PixImage.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +162,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5ADF5F11EE00B0300C4BC94 /* PixImage.swift in Sources */,
+				A5ADF5EE1EE0077500C4BC94 /* APIManager.swift in Sources */,
 				A5ADF5DA1EE006FE00C4BC94 /* ViewController.swift in Sources */,
 				A5ADF5D81EE006FE00C4BC94 /* AppDelegate.swift in Sources */,
 				A5ADF5E01EE006FE00C4BC94 /* AV_WiThings.xcdatamodeld in Sources */,
