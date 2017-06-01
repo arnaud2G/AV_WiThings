@@ -8,21 +8,29 @@
 
 import Foundation
 
+protocol APIManagerDelegate:class {
+    func returnPixImg(ret:[PixImage])
+}
+
 struct APIManager {
     
-    let path:String = "https://pixabay.com/api/"
-    let header:String = "5511001-7691b591d9508e60ec89b63c4"
+    weak var delegate:APIManagerDelegate?
+    
+    let path:String = "https://pixabay.com/api/?key=5511001-7691b591d9508e60ec89b63c4"
     
     func useAPI() {
         
         guard let url = URL(string: "\(path)") else {return}
-        var urlRequest = URLRequest(url: url) // A tester avec time out
-        urlRequest.allHTTPHeaderFields = ["key": header]
+        let urlRequest = URLRequest(url: url)
         URLSession.shared.dataTask(with: urlRequest, completionHandler: {
             data, ret, error in
-            print(data)
-            print(ret)
-            print(error)
+            
+            if let data = data, let json = try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:Any?], let jsonImg = json["hits"] as? [[String:Any]] {
+                DispatchQueue.main.async(execute: {
+                    () -> Void in
+                    self.delegate?.returnPixImg(ret: jsonImg.map{PixImage(json:$0)}.filter{$0 != nil} as! [PixImage])
+                })
+            }
             
             /*if let ret = ret as? HTTPURLResponse, let error = action.error(statuCode: ret.statusCode) {
                 self.delegate?.retError(error: error)

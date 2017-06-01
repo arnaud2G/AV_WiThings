@@ -15,6 +15,7 @@
 		A5ADF5E51EE006FE00C4BC94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5ADF5E31EE006FE00C4BC94 /* LaunchScreen.storyboard */; };
 		A5ADF5EE1EE0077500C4BC94 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ADF5ED1EE0077500C4BC94 /* APIManager.swift */; };
 		A5ADF5F11EE00B0300C4BC94 /* PixImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ADF5F01EE00B0300C4BC94 /* PixImage.swift */; };
+		A5ADF5F41EE0109300C4BC94 /* ListPixImgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ADF5F31EE0109300C4BC94 /* ListPixImgViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		A5ADF5E61EE006FE00C4BC94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5ADF5ED1EE0077500C4BC94 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIManager.swift; path = Manager/APIManager.swift; sourceTree = "<group>"; };
 		A5ADF5F01EE00B0300C4BC94 /* PixImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PixImage.swift; path = Model/PixImage.swift; sourceTree = "<group>"; };
+		A5ADF5F31EE0109300C4BC94 /* ListPixImgViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListPixImgViewController.swift; path = Controller/ListPixImgViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 		A5ADF5D61EE006FE00C4BC94 /* AV_WiThings */ = {
 			isa = PBXGroup;
 			children = (
+				A5ADF5F21EE0107200C4BC94 /* Controller */,
 				A5ADF5EF1EE00AEB00C4BC94 /* Model */,
 				A5ADF5EC1EE0075700C4BC94 /* Manager */,
 				A5ADF5D71EE006FE00C4BC94 /* AppDelegate.swift */,
@@ -87,6 +90,14 @@
 				A5ADF5F01EE00B0300C4BC94 /* PixImage.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		A5ADF5F21EE0107200C4BC94 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5ADF5F31EE0109300C4BC94 /* ListPixImgViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,6 +173,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5ADF5F41EE0109300C4BC94 /* ListPixImgViewController.swift in Sources */,
 				A5ADF5F11EE00B0300C4BC94 /* PixImage.swift in Sources */,
 				A5ADF5EE1EE0077500C4BC94 /* APIManager.swift in Sources */,
 				A5ADF5DA1EE006FE00C4BC94 /* ViewController.swift in Sources */,

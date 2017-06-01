@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PicImage {
+struct PixImage {
     
     let previewURL:String
     let webformatURL:String
