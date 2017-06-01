@@ -13,6 +13,7 @@ class AnimatePixImgViewController:UIViewController {
     
     @IBOutlet weak var imgPix: UIImageView!
     var pixImgs:[PixImage]!
+    var timeByImd:TimeInterval = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,7 @@ class AnimatePixImgViewController:UIViewController {
             }
         })
         imgPix.animationImages = animationImages
-        imgPix.animationDuration = TimeInterval(animationImages.count*3)
+        imgPix.animationDuration = TimeInterval(animationImages.count)*timeByImd
         imgPix.startAnimating()
     }
 }

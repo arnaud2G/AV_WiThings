@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ListPixImgViewController: UICollectionViewController, APIManagerDelegate {
+class ListPixImgViewController: UICollectionViewController {
     
     var apiManager = APIManager()
     var pixImgs = [PixImage]()
@@ -17,8 +17,6 @@ class ListPixImgViewController: UICollectionViewController, APIManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Configuration du cache
         
         // Configuration du navigation
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(self.startAnimationPressed(sender:)))
@@ -28,8 +26,34 @@ class ListPixImgViewController: UICollectionViewController, APIManagerDelegate {
         collectionView?.allowsMultipleSelection = true
         
         // Cofiguration de l'API
-        apiManager.delegate = self
-        apiManager.useAPI()
+        refreshCollectionView()
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(self.refreshCollectionView), for: .valueChanged)
+        self.collectionView?.refreshControl = refreshControl
+    }
+    
+    func refreshCollectionView() {
+        apiManager.useAPI() {
+            result in
+            if let result = result {
+                self.pixImgs = result
+                DispatchQueue.main.async(execute: {
+                    () -> Void in
+                    self.collectionView?.reloadData()
+                    self.collectionView?.refreshControl?.endRefreshing()
+                })
+            } else {
+                let alert = UIAlertController(title: "Attention", message: "Vous devez être connecté pour récupérer les images.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                DispatchQueue.main.async(execute: {
+                    () -> Void in
+                    self.present(alert, animated: true, completion: {
+                        self.collectionView?.refreshControl?.endRefreshing()
+                    })
+                })
+            }
+        }
     }
     
     func startAnimationPressed(sender:UIButton) {
@@ -40,12 +64,6 @@ class ListPixImgViewController: UICollectionViewController, APIManagerDelegate {
         if let dvc = segue.destination as? AnimatePixImgViewController {
             dvc.pixImgs = collectionView?.indexPathsForSelectedItems!.map{pixImgs[$0.row]}
         }
-    }
-    
-    // MARK: delegate de l'API Manager
-    func returnPixImg(ret: [PixImage]) {
-        self.pixImgs = ret
-        collectionView?.reloadData()
     }
     
     // MARK: delegate de la collection view
@@ -64,6 +82,7 @@ class ListPixImgViewController: UICollectionViewController, APIManagerDelegate {
             cell.imgPix.image = pixImgs[indexPath.row].previewImg
         case .none:
             cell.indPix.startAnimating()
+            cell.imgPix.image = nil
             startDownloadSmallImage(indexPath: indexPath)
         }
         return cell
