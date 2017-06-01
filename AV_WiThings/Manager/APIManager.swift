@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol APIManagerDelegate:class {
     func returnPixImg(ret:[PixImage])
@@ -43,111 +44,60 @@ struct APIManager {
     }
 }
 
-// MARK: - APIEnum : tools to request (url + method + body + header) and convert json
-/*enum APIEnum {
-    case me, getItems(id:String), postItems(id:String, name:String), deleteItems(id:String)
+class PendingOperations {
+    lazy var smallDownloadsInProgress = [IndexPath:Operation]()
+    lazy var downloadsInProgress = [IndexPath:Operation]()
+    lazy var downloadQueue:OperationQueue = {
+        var queue = OperationQueue()
+        queue.name = "Download queue"
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+}
+
+class SmallImageDownloader: Operation {
     
-    var endOfUrl:String {
-        switch self {
-        case .me:
-            return "/me"
-        case .getItems(let id), .deleteItems(let id), .postItems(let id, _):
-            return "/items/\(id)"
-        }
+    let pixImage: PixImage
+    init(pixImage: PixImage) {
+        self.pixImage = pixImage
     }
     
-    var httpMethod:String {
-        switch self {
-        case .me, .getItems:
-            return "GET"
-        case .postItems(_):
-            return "POST"
-        case .deleteItems(_):
-            return "DELETE"
+    override func main() {
+        
+        if self.isCancelled {
+            return
         }
-    }
-    
-    var httpBody:Data? {
-        switch self {
-        case .postItems(_, let name):
-            let json: [String: Any] = ["name": String(format: "forlder_%@", name)]
-            return try? JSONSerialization.data(withJSONObject: json)
-        default:
-            return nil
-        }
-    }
-    
-    var httpHeader:[String:String]? {
-        switch self {
-        case .postItems(_,_):
-            return ["Content-Type": "application/json"]
-        default:
-            return nil
-        }
-    }
-    
-    func convertJSON(data:Data) -> Any? {
-        switch self {
-        case .me:
-            guard let json = try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else {return nil}
-            return User(json: json)
-        case .getItems(_):
-            guard let json = try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [[String: Any]] else {return nil}
-            return json.map{Item(json:$0)}.filter{$0 != nil}
-        case .postItems(_,_):
-            guard let json = try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else {return nil}
-            return Item(json:json)
-        case .deleteItems(let id):
-            return id
+        do {
+            let imageData = try Data(contentsOf: URL(string:self.pixImage.previewURL)!)
+            self.pixImage.previewImg = UIImage(data:imageData)
+            self.pixImage.state = .downloaded
+        } catch {
+            self.pixImage.state = .failed
         }
     }
 }
 
-// MARK: - APIEnum+Error
-extension APIEnum {
+class ImageDownloader: Operation {
     
-    func error(statuCode:Int) -> Error? {
-        if statuCodeError.contains(statuCode) {
-            return APIError.apiError(apiEnum: self, statuCode: statuCode)
-        } else {
-            return nil
-        }
+    let pixImage: PixImage
+    init(pixImage: PixImage) {
+        self.pixImage = pixImage
     }
     
-    var statuCodeError:[Int] {
-        return [400,404]
-    }
-    
-    enum APIError: Error, LocalizedError {
-        case apiError(apiEnum:APIEnum,statuCode:Int)
+    override func main() {
         
-        var errorDescription: String? {
-            switch self {
-            case .apiError(let apiEnum, let statuCode):
-                switch statuCode {
-                case 400:
-                    switch apiEnum {
-                    case .postItems(_):
-                        return NSLocalizedString("Invalid name or an item with this name already exists.", comment: "POST - Error 400")
-                    default:
-                        return nil
-                    }
-                case 404:
-                    switch apiEnum {
-                    case .getItems(_):
-                        return NSLocalizedString("The item doesn’t exist", comment: "GET - Error 404")
-                    case .postItems(_):
-                        return NSLocalizedString("The parent item doesn’t exist.", comment: "POST - Error 404")
-                    case .deleteItems(_):
-                        return NSLocalizedString("The item doesn’t exist.", comment: "DELETE - Error 404")
-                    default:
-                        return nil
-                    }
-                default:
-                    return nil
-                }
-            }
+        if self.isCancelled {
+            return
+        }
+        do {
+            let imageData = try Data(contentsOf: URL(string:self.pixImage.webformatURL)!)
+            self.pixImage.webformatImg = UIImage(data:imageData)
+            self.pixImage.state = .downloaded
+        } catch {
+            self.pixImage.state = .failed
         }
     }
-}*/
+}
+
+
 

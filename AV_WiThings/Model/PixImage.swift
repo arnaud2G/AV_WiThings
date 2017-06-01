@@ -7,11 +7,21 @@
 //
 
 import Foundation
+import UIKit
 
-struct PixImage {
+class PixImage {
+    
+    enum PixImageState {
+        case failed, none, downloaded
+    }
     
     let previewURL:String
     let webformatURL:String
+    
+    var previewImg:UIImage? = nil
+    var webformatImg:UIImage? = nil
+    
+    var state:PixImageState = .none
     
     init?(json:[String:Any?]) {
         guard

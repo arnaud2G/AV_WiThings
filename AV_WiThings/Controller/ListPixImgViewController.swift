@@ -13,14 +13,16 @@ class ListPixImgViewController: UICollectionViewController, APIManagerDelegate {
     
     var apiManager = APIManager()
     var pixImgs = [PixImage]()
+    let myPendingOperations = PendingOperations()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Configuration du cache
+        
         // Configuration du navigation
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(self.startAnimationPressed(sender:)))
         navigationItem.rightBarButtonItem?.isEnabled = pixImgs.count >= 2
-
         
         // Configuration de la collectionView
         collectionView?.allowsMultipleSelection = true
@@ -37,7 +39,6 @@ class ListPixImgViewController: UICollectionViewController, APIManagerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dvc = segue.destination as? AnimatePixImgViewController {
             dvc.pixImgs = collectionView?.indexPathsForSelectedItems!.map{pixImgs[$0.row]}
-            dvc.pixImgages = collectionView?.indexPathsForSelectedItems!.map{(collectionView?.cellForItem(at: $0) as! PixCell).imgPix.image!}
         }
     }
     
@@ -47,7 +48,6 @@ class ListPixImgViewController: UICollectionViewController, APIManagerDelegate {
         collectionView?.reloadData()
     }
     
-    
     // MARK: delegate de la collection view
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return pixImgs.count
@@ -55,16 +55,74 @@ class ListPixImgViewController: UICollectionViewController, APIManagerDelegate {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PixCell", for: indexPath) as! PixCell
-        cell.setSmallImage(withUrl: pixImgs[indexPath.row].previewURL)
+        switch pixImgs[indexPath.row].state {
+        case .failed: break
+            // TODO: Gestion de l'erreur de telechargement
+        case .downloaded:
+            cell.imgPix.image = pixImgs[indexPath.row].previewImg
+        case .none:
+            startDownloadSmallImage(indexPath: indexPath)
+        }
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if pixImgs[indexPath.row].previewImg == nil {
+            collectionView.deselectItem(at: indexPath, animated: false)
+            return
+        }
+        if pixImgs[indexPath.row].webformatImg == nil {
+            startDownloadImage(indexPath: indexPath)
+        }
         navigationItem.rightBarButtonItem?.isEnabled = collectionView.indexPathsForSelectedItems!.count >= 2
     }
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         navigationItem.rightBarButtonItem?.isEnabled = collectionView.indexPathsForSelectedItems!.count >= 2
+    }
+    
+    // Gestion du telechargement des images
+    func startDownloadSmallImage(indexPath: IndexPath) {
+        
+        // Cas des plus grandes listes (si scroll)
+        if myPendingOperations.smallDownloadsInProgress[indexPath] != nil {
+            return
+        }
+        
+        // On défini l'opération
+        let downloader = SmallImageDownloader(pixImage: pixImgs[indexPath.row])
+        downloader.completionBlock = {
+            if downloader.isCancelled {
+                return
+            }
+            DispatchQueue.main.async(execute: {
+                () -> Void in
+                self.myPendingOperations.smallDownloadsInProgress.removeValue(forKey: indexPath)
+                self.collectionView?.reloadItems(at: [indexPath])
+            })
+        }
+        
+        // On ajoute l'opération
+        myPendingOperations.smallDownloadsInProgress[indexPath] = downloader
+        myPendingOperations.downloadQueue.addOperation(downloader)
+    }
+    func startDownloadImage(indexPath: IndexPath) {
+        
+        // Cas des plus grandes listes (si scroll)
+        if myPendingOperations.downloadsInProgress[indexPath] != nil {
+            return
+        }
+        
+        // On défini l'opération
+        let downloader = ImageDownloader(pixImage: pixImgs[indexPath.row])
+        downloader.completionBlock = {
+            self.myPendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
+        }
+        
+        // On ajoute l'opération
+        myPendingOperations.downloadsInProgress[indexPath] = downloader
+        myPendingOperations.downloadQueue.addOperation(downloader)
     }
 }
 
@@ -72,17 +130,14 @@ class PixCell:UICollectionViewCell {
     
     @IBOutlet weak var imgPix: UIImageView!
     
-    func setSmallImage(withUrl url:String) {
+    func setSmallImage(withStringUrl url:String) {
         
-        let url = URL(string: url)
-        URLSession.shared.dataTask(with: url!) {
-            (data, response, error) in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async(execute: {
-                () -> Void in
-                self.imgPix.image = UIImage(data: data)
-            })
-        }.resume()
+        UIImage.image(fromUrl: url, completionHandler: {
+            image in
+            if let image = image {
+                self.imgPix.image = image
+            }
+        })
     }
     
     override var isSelected: Bool{

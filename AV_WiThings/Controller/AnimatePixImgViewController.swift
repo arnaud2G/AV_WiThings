@@ -13,7 +13,6 @@ class AnimatePixImgViewController:UIViewController {
     
     @IBOutlet weak var imgPix: UIImageView!
     var pixImgs:[PixImage]!
-    var pixImgages:[UIImage]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +27,14 @@ class AnimatePixImgViewController:UIViewController {
             })
             }.resume()
         
-        imgPix.animationImages = pixImgages
+        imgPix.animationImages = pixImgs.map({
+            (pixImg:PixImage) -> UIImage in
+            if let webImg = pixImg.webformatImg {
+                return webImg
+            } else {
+                return pixImg.previewImg!
+            }
+        })
         imgPix.animationDuration = 4.0
         imgPix.startAnimating()
     }
