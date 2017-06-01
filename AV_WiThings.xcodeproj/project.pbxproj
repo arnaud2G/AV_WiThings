@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A540CCDA1EE01A8900C89238 /* AnimatePixImgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A540CCD91EE01A8900C89238 /* AnimatePixImgViewController.swift */; };
-		A540CCDC1EE0228800C89238 /* GlobalFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A540CCDB1EE0228800C89238 /* GlobalFunc.swift */; };
 		A540CCDE1EE035F000C89238 /* DLPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A540CCDD1EE035F000C89238 /* DLPhotoManager.swift */; };
 		A5ADF5D81EE006FE00C4BC94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ADF5D71EE006FE00C4BC94 /* AppDelegate.swift */; };
-		A5ADF5DA1EE006FE00C4BC94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ADF5D91EE006FE00C4BC94 /* ViewController.swift */; };
 		A5ADF5DD1EE006FE00C4BC94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5ADF5DB1EE006FE00C4BC94 /* Main.storyboard */; };
 		A5ADF5E01EE006FE00C4BC94 /* AV_WiThings.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5ADF5DE1EE006FE00C4BC94 /* AV_WiThings.xcdatamodeld */; };
 		A5ADF5E21EE006FE00C4BC94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5ADF5E11EE006FE00C4BC94 /* Assets.xcassets */; };
@@ -23,11 +21,9 @@
 
 /* Begin PBXFileReference section */
 		A540CCD91EE01A8900C89238 /* AnimatePixImgViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimatePixImgViewController.swift; path = Controller/AnimatePixImgViewController.swift; sourceTree = "<group>"; };
-		A540CCDB1EE0228800C89238 /* GlobalFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFunc.swift; sourceTree = "<group>"; };
-		A540CCDD1EE035F000C89238 /* DLPhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLPhotoManager.swift; sourceTree = "<group>"; };
+		A540CCDD1EE035F000C89238 /* DLPhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DLPhotoManager.swift; path = Manager/DLPhotoManager.swift; sourceTree = "<group>"; };
 		A5ADF5D41EE006FE00C4BC94 /* AV_WiThings.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AV_WiThings.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5ADF5D71EE006FE00C4BC94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A5ADF5D91EE006FE00C4BC94 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A5ADF5DC1EE006FE00C4BC94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A5ADF5DF1EE006FE00C4BC94 /* AV_WiThings.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AV_WiThings.xcdatamodel; sourceTree = "<group>"; };
 		A5ADF5E11EE006FE00C4BC94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -72,8 +68,6 @@
 				A5ADF5EF1EE00AEB00C4BC94 /* Model */,
 				A5ADF5EC1EE0075700C4BC94 /* Manager */,
 				A5ADF5D71EE006FE00C4BC94 /* AppDelegate.swift */,
-				A540CCDB1EE0228800C89238 /* GlobalFunc.swift */,
-				A5ADF5D91EE006FE00C4BC94 /* ViewController.swift */,
 				A5ADF5DB1EE006FE00C4BC94 /* Main.storyboard */,
 				A5ADF5E11EE006FE00C4BC94 /* Assets.xcassets */,
 				A5ADF5E31EE006FE00C4BC94 /* LaunchScreen.storyboard */,
@@ -182,13 +176,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A540CCDC1EE0228800C89238 /* GlobalFunc.swift in Sources */,
 				A5ADF5F41EE0109300C4BC94 /* ListPixImgViewController.swift in Sources */,
 				A540CCDA1EE01A8900C89238 /* AnimatePixImgViewController.swift in Sources */,
 				A5ADF5F11EE00B0300C4BC94 /* PixImage.swift in Sources */,
 				A5ADF5EE1EE0077500C4BC94 /* APIManager.swift in Sources */,
 				A540CCDE1EE035F000C89238 /* DLPhotoManager.swift in Sources */,
-				A5ADF5DA1EE006FE00C4BC94 /* ViewController.swift in Sources */,
 				A5ADF5D81EE006FE00C4BC94 /* AppDelegate.swift in Sources */,
 				A5ADF5E01EE006FE00C4BC94 /* AV_WiThings.xcdatamodeld in Sources */,
 			);

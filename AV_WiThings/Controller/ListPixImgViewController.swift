@@ -158,16 +158,6 @@ class PixCell:UICollectionViewCell {
     @IBOutlet weak var imgPix: UIImageView!
     @IBOutlet weak var indPix: UIActivityIndicatorView!
     
-    func setSmallImage(withStringUrl url:String) {
-        
-        UIImage.image(fromUrl: url, completionHandler: {
-            image in
-            if let image = image {
-                self.imgPix.image = image
-            }
-        })
-    }
-    
     override var isSelected: Bool{
         didSet {
             if isSelected {
